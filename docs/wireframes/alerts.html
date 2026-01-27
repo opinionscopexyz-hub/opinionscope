@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpinionScope - Alert Management Wireframe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            base: '#09090b',
+            elevated: '#18181b',
+            surface: '#27272a',
+            overlay: '#3f3f46',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-base text-zinc-50 font-sans antialiased">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-elevated border-r border-zinc-800">
+      <div class="h-16 flex items-center gap-2 px-6 border-b border-zinc-800">
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <span class="text-lg font-bold">OpinionScope</span>
+      </div>
+      <nav class="flex-1 p-4 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="screener.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          Screener
+        </a>
+        <a href="whales.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          Whale Tracker
+        </a>
+        <a href="activity.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Activity Feed
+        </a>
+        <a href="alerts.html" class="flex items-center gap-3 px-3 py-2 bg-surface text-white rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          Alerts
+          <span class="ml-auto px-1.5 py-0.5 text-xs bg-blue-600 rounded">2/3</span>
+        </a>
+        <div class="pt-4 mt-4 border-t border-zinc-800">
+          <a href="settings.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Settings
+          </a>
+        </div>
+      </nav>
+      <div class="p-4 border-t border-zinc-800">
+        <div class="flex items-center gap-3 px-3 py-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full flex items-center justify-center text-sm font-medium">JD</div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium truncate">John Doe</div>
+            <div class="text-xs text-zinc-500">Free Plan</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+      <!-- Top Bar -->
+      <header class="h-16 flex items-center justify-between px-6 border-b border-zinc-800 bg-elevated">
+        <button class="lg:hidden text-zinc-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold hidden lg:block">Alert Management</h1>
+        <div class="flex items-center gap-4">
+          <a href="pricing.html" class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-violet-600/20 to-blue-600/20 border border-violet-500/30 rounded-lg text-sm">
+            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span class="text-violet-300">Upgrade to Pro</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Alert Content -->
+      <div class="flex-1 overflow-auto p-6">
+        <!-- Usage Banner -->
+        <div class="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-2">
+                <div class="flex -space-x-1">
+                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                  <div class="w-3 h-3 bg-zinc-600 rounded-full"></div>
+                </div>
+              </div>
+              <div>
+                <p class="font-medium text-amber-400">2 of 3 alerts used</p>
+                <p class="text-sm text-zinc-400">Upgrade to Pro for up to 50 alerts</p>
+              </div>
+            </div>
+            <a href="pricing.html" class="hidden sm:block px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black text-sm font-medium rounded-lg transition-colors">
+              Get More Alerts
+            </a>
+          </div>
+        </div>
+
+        <!-- Create Alert Section -->
+        <div class="mb-8">
+          <h2 class="text-lg font-semibold mb-4">Create New Alert</h2>
+          <div class="bg-elevated rounded-xl border border-zinc-800 p-6">
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Alert Type -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-400 mb-2">Alert Type</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <button class="p-4 bg-blue-600/20 border-2 border-blue-500 rounded-lg text-center">
+                    <svg class="w-6 h-6 text-blue-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                    <span class="text-sm font-medium">Price Alert</span>
+                  </button>
+                  <div class="relative">
+                    <button class="p-4 bg-surface border border-zinc-700 rounded-lg text-center w-full opacity-50 cursor-not-allowed">
+                      <svg class="w-6 h-6 text-zinc-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                      </svg>
+                      <span class="text-sm font-medium text-zinc-500">Whale Alert</span>
+                    </button>
+                    <span class="absolute top-2 right-2 px-1.5 py-0.5 bg-blue-600 rounded text-[10px]">Pro</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Market Selection -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-400 mb-2">Select Market</label>
+                <div class="relative">
+                  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                  <input type="text" placeholder="Search markets..." class="w-full pl-10 pr-4 py-3 bg-surface border border-zinc-700 rounded-lg text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <!-- Search Results Dropdown (Example) -->
+                <div class="mt-2 bg-surface border border-zinc-700 rounded-lg overflow-hidden">
+                  <div class="p-3 hover:bg-overlay cursor-pointer border-b border-zinc-700">
+                    <div class="font-medium text-sm">Will BTC reach $150k in 2025?</div>
+                    <div class="text-xs text-zinc-500">Polymarket · Crypto</div>
+                  </div>
+                  <div class="p-3 hover:bg-overlay cursor-pointer">
+                    <div class="font-medium text-sm">ETH Spot ETF Approved Q1 2025</div>
+                    <div class="text-xs text-zinc-500">Polymarket · Crypto</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Condition -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-400 mb-2">Condition</label>
+                <div class="flex gap-3">
+                  <select class="flex-1 bg-surface border border-zinc-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500">
+                    <option>YES price goes above</option>
+                    <option>YES price goes below</option>
+                    <option>NO price goes above</option>
+                    <option>NO price goes below</option>
+                  </select>
+                  <div class="relative">
+                    <input type="number" placeholder="50" class="w-24 bg-surface border border-zinc-700 rounded-lg px-4 py-3 text-sm font-mono focus:outline-none focus:border-blue-500">
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 text-sm">%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notification Channels -->
+              <div>
+                <label class="block text-sm font-medium text-zinc-400 mb-2">Notify via</label>
+                <div class="flex flex-wrap gap-2">
+                  <label class="flex items-center gap-2 px-3 py-2 bg-surface border border-zinc-700 rounded-lg cursor-pointer hover:border-zinc-600">
+                    <input type="checkbox" class="rounded bg-surface border-zinc-600 text-blue-500 focus:ring-blue-500" checked>
+                    <span class="text-sm">Email</span>
+                  </label>
+                  <label class="flex items-center gap-2 px-3 py-2 bg-surface border border-zinc-700 rounded-lg cursor-pointer hover:border-zinc-600">
+                    <input type="checkbox" class="rounded bg-surface border-zinc-600 text-blue-500 focus:ring-blue-500" checked>
+                    <span class="text-sm">In-app</span>
+                  </label>
+                  <div class="relative">
+                    <label class="flex items-center gap-2 px-3 py-2 bg-surface border border-zinc-700 rounded-lg cursor-not-allowed opacity-50">
+                      <input type="checkbox" class="rounded bg-surface border-zinc-600" disabled>
+                      <span class="text-sm">Telegram</span>
+                    </label>
+                    <span class="absolute -top-1 -right-1 px-1 bg-blue-600 rounded text-[10px]">Pro</span>
+                  </div>
+                  <div class="relative">
+                    <label class="flex items-center gap-2 px-3 py-2 bg-surface border border-zinc-700 rounded-lg cursor-not-allowed opacity-50">
+                      <input type="checkbox" class="rounded bg-surface border-zinc-600" disabled>
+                      <span class="text-sm">Discord</span>
+                    </label>
+                    <span class="absolute -top-1 -right-1 px-1 bg-blue-600 rounded text-[10px]">Pro</span>
+                  </div>
+                  <div class="relative">
+                    <label class="flex items-center gap-2 px-3 py-2 bg-surface border border-zinc-700 rounded-lg cursor-not-allowed opacity-50">
+                      <input type="checkbox" class="rounded bg-surface border-zinc-600" disabled>
+                      <span class="text-sm">Push</span>
+                    </label>
+                    <span class="absolute -top-1 -right-1 px-1 bg-blue-600 rounded text-[10px]">Pro</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Create Button -->
+            <div class="mt-6 flex items-center justify-between">
+              <p class="text-sm text-zinc-500">1 alert slot remaining</p>
+              <button class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-colors">
+                Create Alert
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Alerts -->
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">Active Alerts</h2>
+            <span class="text-sm text-zinc-500">2 active</span>
+          </div>
+
+          <div class="space-y-3">
+            <!-- Alert 1 - Price Alert -->
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4 hover:border-zinc-700 transition-colors">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="font-medium">Price Alert</span>
+                      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span class="text-xs text-zinc-500">Active</span>
+                    </div>
+                    <p class="text-sm text-zinc-300 mb-2">
+                      <span class="text-white font-medium">Will BTC reach $150k in 2025?</span>
+                    </p>
+                    <p class="text-sm text-zinc-400">
+                      Notify when YES price goes <span class="text-green-400">above 50%</span>
+                    </p>
+                    <div class="flex items-center gap-3 mt-2">
+                      <span class="flex items-center gap-1 text-xs text-zinc-500">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Email
+                      </span>
+                      <span class="flex items-center gap-1 text-xs text-zinc-500">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        In-app
+                      </span>
+                      <span class="text-xs text-zinc-600">Created 2 days ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="text-right mr-4">
+                    <div class="text-sm text-zinc-500">Current</div>
+                    <div class="font-mono text-lg">42%</div>
+                  </div>
+                  <button class="p-2 text-zinc-500 hover:text-white rounded-lg hover:bg-surface transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-surface transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Alert 2 - Whale Alert (Following) -->
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4 hover:border-zinc-700 transition-colors">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <span class="font-medium">Whale Activity</span>
+                      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span class="text-xs text-zinc-500">Active</span>
+                    </div>
+                    <p class="text-sm text-zinc-300 mb-2">
+                      Following <span class="text-blue-400 font-medium">CryptoOracle</span>
+                    </p>
+                    <p class="text-sm text-zinc-400">
+                      Notify on any trade activity
+                    </p>
+                    <div class="flex items-center gap-3 mt-2">
+                      <span class="flex items-center gap-1 text-xs text-zinc-500">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Email
+                      </span>
+                      <span class="flex items-center gap-1 text-xs text-zinc-500">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        In-app
+                      </span>
+                      <span class="text-xs text-zinc-600">Created 5 days ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="text-right mr-4">
+                    <div class="text-sm text-zinc-500">Last triggered</div>
+                    <div class="text-sm text-zinc-300">2 hours ago</div>
+                  </div>
+                  <button class="p-2 text-zinc-500 hover:text-white rounded-lg hover:bg-surface transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button class="p-2 text-zinc-500 hover:text-red-500 rounded-lg hover:bg-surface transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty Slot -->
+            <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center">
+              <div class="w-12 h-12 bg-surface rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg class="w-6 h-6 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+              </div>
+              <p class="text-zinc-400 mb-2">1 alert slot available</p>
+              <p class="text-xs text-zinc-500">Create a new alert above or upgrade for more slots</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alert History -->
+        <div class="mt-8">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold">Alert History</h2>
+            <button class="text-sm text-zinc-500 hover:text-white">Clear all</button>
+          </div>
+
+          <div class="bg-elevated rounded-xl border border-zinc-800 overflow-hidden">
+            <table class="w-full text-sm">
+              <thead class="text-xs text-zinc-500 uppercase border-b border-zinc-800 bg-surface/30">
+                <tr>
+                  <th class="px-4 py-3 text-left">Alert</th>
+                  <th class="px-4 py-3 text-left hidden md:table-cell">Condition</th>
+                  <th class="px-4 py-3 text-left">Triggered</th>
+                  <th class="px-4 py-3 text-left hidden sm:table-cell">Channel</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-800/50">
+                <tr class="hover:bg-surface/50">
+                  <td class="px-4 py-3">
+                    <div class="font-medium">CryptoOracle activity</div>
+                    <div class="text-xs text-zinc-500">Whale Alert</div>
+                  </td>
+                  <td class="px-4 py-3 hidden md:table-cell text-zinc-400">Bought $50K on BTC $150k</td>
+                  <td class="px-4 py-3 text-zinc-400">2 hours ago</td>
+                  <td class="px-4 py-3 hidden sm:table-cell">
+                    <span class="flex items-center gap-1 text-xs text-zinc-500">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                      </svg>
+                      Email
+                    </span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-surface/50">
+                  <td class="px-4 py-3">
+                    <div class="font-medium">ETH ETF Q1 2025</div>
+                    <div class="text-xs text-zinc-500">Price Alert</div>
+                  </td>
+                  <td class="px-4 py-3 hidden md:table-cell text-zinc-400">YES price above 30%</td>
+                  <td class="px-4 py-3 text-zinc-400">1 day ago</td>
+                  <td class="px-4 py-3 hidden sm:table-cell">
+                    <span class="flex items-center gap-1 text-xs text-zinc-500">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                      </svg>
+                      In-app
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

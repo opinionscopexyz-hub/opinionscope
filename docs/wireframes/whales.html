@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpinionScope - Whale Tracker Wireframe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            base: '#09090b',
+            elevated: '#18181b',
+            surface: '#27272a',
+            overlay: '#3f3f46',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-base text-zinc-50 font-sans antialiased">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-elevated border-r border-zinc-800">
+      <div class="h-16 flex items-center gap-2 px-6 border-b border-zinc-800">
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <span class="text-lg font-bold">OpinionScope</span>
+      </div>
+      <nav class="flex-1 p-4 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="screener.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          Screener
+        </a>
+        <a href="whales.html" class="flex items-center gap-3 px-3 py-2 bg-surface text-white rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          Whale Tracker
+        </a>
+        <a href="activity.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Activity Feed
+        </a>
+        <a href="alerts.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          Alerts
+        </a>
+        <div class="pt-4 mt-4 border-t border-zinc-800">
+          <a href="settings.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Settings
+          </a>
+        </div>
+      </nav>
+      <div class="p-4 border-t border-zinc-800">
+        <div class="flex items-center gap-3 px-3 py-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full flex items-center justify-center text-sm font-medium">JD</div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium truncate">John Doe</div>
+            <div class="text-xs text-zinc-500">Free Plan</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+      <!-- Top Bar -->
+      <header class="h-16 flex items-center justify-between px-6 border-b border-zinc-800 bg-elevated">
+        <button class="lg:hidden text-zinc-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold hidden lg:block">Whale Tracker</h1>
+        <div class="flex items-center gap-4">
+          <a href="pricing.html" class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-violet-600/20 to-blue-600/20 border border-violet-500/30 rounded-lg text-sm">
+            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span class="text-violet-300">Upgrade to Pro</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Content Area with Split Panel -->
+      <div class="flex-1 flex overflow-hidden">
+        <!-- Leaderboard Section -->
+        <div class="flex-1 overflow-auto p-6">
+          <!-- Stats Summary -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+              <div class="text-xs text-zinc-500 mb-1">Total Whales</div>
+              <div class="text-2xl font-bold font-mono">127</div>
+            </div>
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+              <div class="text-xs text-zinc-500 mb-1">Avg Win Rate</div>
+              <div class="text-2xl font-bold font-mono text-green-500">62.4%</div>
+            </div>
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+              <div class="text-xs text-zinc-500 mb-1">Total Volume (24h)</div>
+              <div class="text-2xl font-bold font-mono">$4.2M</div>
+            </div>
+            <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+              <div class="text-xs text-zinc-500 mb-1">Your Following</div>
+              <div class="text-2xl font-bold font-mono">2/3</div>
+            </div>
+          </div>
+
+          <!-- Search & Filter -->
+          <div class="flex gap-4 mb-6">
+            <div class="flex-1 relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input type="text" placeholder="Search by name or address..." class="w-full pl-10 pr-4 py-2.5 bg-elevated border border-zinc-800 rounded-lg text-sm focus:outline-none focus:border-blue-500">
+            </div>
+            <select class="bg-elevated border border-zinc-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+              <option>Sort: Win Rate</option>
+              <option>Sort: Volume</option>
+              <option>Sort: P&L</option>
+              <option>Sort: Last Active</option>
+            </select>
+          </div>
+
+          <!-- Leaderboard Table -->
+          <div class="bg-elevated rounded-xl border border-zinc-800 overflow-hidden">
+            <table class="w-full text-sm">
+              <thead class="text-xs text-zinc-500 uppercase border-b border-zinc-800 bg-surface/30">
+                <tr>
+                  <th class="px-4 py-3 text-left w-12">Rank</th>
+                  <th class="px-4 py-3 text-left">Trader</th>
+                  <th class="px-4 py-3 text-right">Win Rate</th>
+                  <th class="px-4 py-3 text-right hidden md:table-cell">Total Volume</th>
+                  <th class="px-4 py-3 text-right hidden lg:table-cell">P&L</th>
+                  <th class="px-4 py-3 text-right hidden sm:table-cell">Trades</th>
+                  <th class="px-4 py-3 text-center">Status</th>
+                  <th class="px-4 py-3 text-center w-24">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-800/50">
+                <!-- Rank 1 - Gold -->
+                <tr class="hover:bg-surface/50 transition-colors cursor-pointer bg-amber-500/5" onclick="showWhaleDetail(1)">
+                  <td class="px-4 py-4">
+                    <span class="text-2xl">🥇</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-lg">
+                        🐋
+                      </div>
+                      <div>
+                        <div class="font-medium flex items-center gap-2">
+                          CryptoOracle
+                          <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                          </svg>
+                        </div>
+                        <div class="text-xs text-zinc-500 font-mono">0x7a3d...8f2c</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="font-mono text-lg text-green-500">78.4%</span>
+                  </td>
+                  <td class="px-4 py-4 text-right font-mono hidden md:table-cell">$2.1M</td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500 hidden lg:table-cell">+$847K</td>
+                  <td class="px-4 py-4 text-right font-mono hidden sm:table-cell">342</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/10 text-green-400 text-xs rounded-full">
+                      <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded transition-colors">
+                      Following
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Rank 2 - Silver -->
+                <tr class="hover:bg-surface/50 transition-colors cursor-pointer bg-zinc-400/5" onclick="showWhaleDetail(2)">
+                  <td class="px-4 py-4">
+                    <span class="text-2xl">🥈</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-br from-zinc-400 to-zinc-500 rounded-full flex items-center justify-center text-lg">
+                        🦈
+                      </div>
+                      <div>
+                        <div class="font-medium">BigWinTrader</div>
+                        <div class="text-xs text-zinc-500 font-mono">0x2b1c...4e9a</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="font-mono text-lg text-green-500">71.2%</span>
+                  </td>
+                  <td class="px-4 py-4 text-right font-mono hidden md:table-cell">$1.8M</td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500 hidden lg:table-cell">+$624K</td>
+                  <td class="px-4 py-4 text-right font-mono hidden sm:table-cell">287</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/10 text-green-400 text-xs rounded-full">
+                      <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <button class="px-3 py-1.5 bg-surface hover:bg-overlay border border-zinc-700 text-white text-xs font-medium rounded transition-colors">
+                      Follow
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Rank 3 - Bronze -->
+                <tr class="hover:bg-surface/50 transition-colors cursor-pointer bg-amber-700/5" onclick="showWhaleDetail(3)">
+                  <td class="px-4 py-4">
+                    <span class="text-2xl">🥉</span>
+                  </td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center text-lg">
+                        🐬
+                      </div>
+                      <div>
+                        <div class="font-medium">AlphaSeeker</div>
+                        <div class="text-xs text-zinc-500 font-mono">0x9f4a...1d7e</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-right">
+                    <span class="font-mono text-lg text-green-500">68.9%</span>
+                  </td>
+                  <td class="px-4 py-4 text-right font-mono hidden md:table-cell">$1.4M</td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500 hidden lg:table-cell">+$412K</td>
+                  <td class="px-4 py-4 text-right font-mono hidden sm:table-cell">198</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-500/10 text-zinc-400 text-xs rounded-full">
+                      2h ago
+                    </span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <button class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium rounded transition-colors">
+                      Following
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Rank 4-10 (remaining visible for free tier) -->
+                <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                  <td class="px-4 py-4 font-mono text-zinc-500">4</td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center text-lg">🎯</div>
+                      <div>
+                        <div class="font-medium">PredictionKing</div>
+                        <div class="text-xs text-zinc-500 font-mono">0x4c2e...9b3f</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500">67.1%</td>
+                  <td class="px-4 py-4 text-right font-mono hidden md:table-cell">$980K</td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500 hidden lg:table-cell">+$298K</td>
+                  <td class="px-4 py-4 text-right font-mono hidden sm:table-cell">156</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/10 text-green-400 text-xs rounded-full">
+                      <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                      Active
+                    </span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <button class="px-3 py-1.5 bg-surface hover:bg-overlay border border-zinc-700 text-white text-xs font-medium rounded transition-colors">
+                      Follow
+                    </button>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                  <td class="px-4 py-4 font-mono text-zinc-500">5</td>
+                  <td class="px-4 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-lg">🧠</div>
+                      <div>
+                        <div class="font-medium">MarketMind</div>
+                        <div class="text-xs text-zinc-500 font-mono">0x8d5f...2a1b</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500">65.8%</td>
+                  <td class="px-4 py-4 text-right font-mono hidden md:table-cell">$720K</td>
+                  <td class="px-4 py-4 text-right font-mono text-green-500 hidden lg:table-cell">+$187K</td>
+                  <td class="px-4 py-4 text-right font-mono hidden sm:table-cell">134</td>
+                  <td class="px-4 py-4 text-center">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-500/10 text-zinc-400 text-xs rounded-full">1d ago</span>
+                  </td>
+                  <td class="px-4 py-4 text-center">
+                    <button class="px-3 py-1.5 bg-surface hover:bg-overlay border border-zinc-700 text-white text-xs font-medium rounded transition-colors">Follow</button>
+                  </td>
+                </tr>
+
+                <!-- Locked Rows (Free tier limit) -->
+                <tr class="relative">
+                  <td colspan="8" class="p-0">
+                    <div class="relative">
+                      <div class="blur-sm opacity-50 pointer-events-none">
+                        <table class="w-full">
+                          <tbody>
+                            <tr class="border-t border-zinc-800/50">
+                              <td class="px-4 py-4 font-mono text-zinc-500 w-12">11</td>
+                              <td class="px-4 py-4">
+                                <div class="flex items-center gap-3">
+                                  <div class="w-10 h-10 bg-zinc-700 rounded-full"></div>
+                                  <div class="h-4 w-24 bg-zinc-700 rounded"></div>
+                                </div>
+                              </td>
+                              <td class="px-4 py-4 text-right"><div class="h-4 w-12 bg-zinc-700 rounded ml-auto"></div></td>
+                              <td class="px-4 py-4 text-right hidden md:table-cell"><div class="h-4 w-16 bg-zinc-700 rounded ml-auto"></div></td>
+                              <td class="px-4 py-4 text-right hidden lg:table-cell"><div class="h-4 w-16 bg-zinc-700 rounded ml-auto"></div></td>
+                              <td class="px-4 py-4 text-right hidden sm:table-cell"><div class="h-4 w-8 bg-zinc-700 rounded ml-auto"></div></td>
+                              <td class="px-4 py-4 text-center"><div class="h-4 w-12 bg-zinc-700 rounded mx-auto"></div></td>
+                              <td class="px-4 py-4 text-center w-24"><div class="h-6 w-16 bg-zinc-700 rounded mx-auto"></div></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="absolute inset-0 flex items-center justify-center bg-base/60">
+                        <div class="text-center">
+                          <div class="flex items-center justify-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                            <span class="text-zinc-400">117 more whales</span>
+                          </div>
+                          <a href="pricing.html" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg transition-colors">
+                            Upgrade to Pro
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Whale Detail Panel (Slide-in) -->
+        <div class="hidden xl:block w-96 bg-elevated border-l border-zinc-800 overflow-auto">
+          <div class="p-6">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-lg font-semibold">Whale Profile</h2>
+              <button class="text-zinc-500 hover:text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="text-center mb-6">
+              <div class="relative inline-block">
+                <div class="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-3">
+                  🐋
+                </div>
+                <span class="absolute -top-1 -right-1 text-2xl">🥇</span>
+              </div>
+              <h3 class="text-xl font-bold mb-1 flex items-center justify-center gap-2">
+                CryptoOracle
+                <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812z"/>
+                </svg>
+              </h3>
+              <p class="text-sm text-zinc-500 font-mono mb-4">0x7a3d...8f2c</p>
+              <button class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-colors">
+                Following
+              </button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+              <div class="bg-surface rounded-lg p-3 text-center">
+                <div class="text-2xl font-bold font-mono text-green-500">78.4%</div>
+                <div class="text-xs text-zinc-500">Win Rate</div>
+              </div>
+              <div class="bg-surface rounded-lg p-3 text-center">
+                <div class="text-2xl font-bold font-mono">342</div>
+                <div class="text-xs text-zinc-500">Total Trades</div>
+              </div>
+              <div class="bg-surface rounded-lg p-3 text-center">
+                <div class="text-2xl font-bold font-mono">$2.1M</div>
+                <div class="text-xs text-zinc-500">Total Volume</div>
+              </div>
+              <div class="bg-surface rounded-lg p-3 text-center">
+                <div class="text-2xl font-bold font-mono text-green-500">+$847K</div>
+                <div class="text-xs text-zinc-500">All-time P&L</div>
+              </div>
+            </div>
+
+            <!-- Win Streak -->
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-4 mb-6">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-green-400">Current Win Streak</span>
+                <span class="text-2xl font-bold font-mono text-green-500">7 🔥</span>
+              </div>
+            </div>
+
+            <!-- Favorite Categories -->
+            <div class="mb-6">
+              <h4 class="text-sm font-medium text-zinc-400 mb-3">Favorite Categories</h4>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-orange-500/10 text-orange-400 text-xs rounded-full">Crypto (45%)</span>
+                <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full">Politics (32%)</span>
+                <span class="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full">Sports (23%)</span>
+              </div>
+            </div>
+
+            <!-- Performance Chart Placeholder (Pro+ only) -->
+            <div class="relative mb-6">
+              <h4 class="text-sm font-medium text-zinc-400 mb-3">Performance Over Time</h4>
+              <div class="bg-surface rounded-lg p-4 h-32 flex items-center justify-center">
+                <div class="text-center">
+                  <svg class="w-8 h-8 text-zinc-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                  <p class="text-xs text-zinc-500">Pro+ feature</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Trades -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-sm font-medium text-zinc-400">Recent Trades</h4>
+                <span class="text-xs text-zinc-500">Last 3 of 10</span>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-center gap-3 p-3 bg-surface rounded-lg">
+                  <div class="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">BTC $150k in 2025</p>
+                    <p class="text-xs text-zinc-500">Bought at 42% • 2h ago</p>
+                  </div>
+                  <span class="font-mono text-sm text-green-500">$25K</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-surface rounded-lg">
+                  <div class="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">ETH ETF Q1 2025</p>
+                    <p class="text-xs text-zinc-500">Bought at 28% • 5h ago</p>
+                  </div>
+                  <span class="font-mono text-sm text-green-500">$15K</span>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-surface rounded-lg">
+                  <div class="w-8 h-8 bg-red-500/10 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">Trump wins 2024</p>
+                    <p class="text-xs text-zinc-500">Sold at 71% • 1d ago</p>
+                  </div>
+                  <span class="font-mono text-sm text-red-500">$30K</span>
+                </div>
+              </div>
+
+              <!-- Locked trades -->
+              <div class="mt-3 p-3 bg-surface/50 rounded-lg border border-dashed border-zinc-700 text-center">
+                <p class="text-xs text-zinc-500 mb-2">7 more trades hidden</p>
+                <a href="pricing.html" class="text-xs text-blue-400 hover:text-blue-300">Upgrade to Pro to see more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

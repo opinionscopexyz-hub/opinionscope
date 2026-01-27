@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpinionScope - Dashboard Wireframe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            base: '#09090b',
+            elevated: '#18181b',
+            surface: '#27272a',
+            overlay: '#3f3f46',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-base text-zinc-50 font-sans antialiased">
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden lg:flex lg:flex-col lg:w-64 bg-elevated border-r border-zinc-800">
+      <!-- Logo -->
+      <div class="h-16 flex items-center gap-2 px-6 border-b border-zinc-800">
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-violet-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+        </div>
+        <span class="text-lg font-bold">OpinionScope</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 p-4 space-y-1">
+        <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 bg-surface text-white rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+          </svg>
+          Dashboard
+        </a>
+        <a href="screener.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          Screener
+        </a>
+        <a href="whales.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          Whale Tracker
+        </a>
+        <a href="activity.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Activity Feed
+          <span class="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+        </a>
+        <a href="alerts.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          Alerts
+          <span class="ml-auto px-1.5 py-0.5 text-xs bg-blue-600 rounded">3</span>
+        </a>
+
+        <div class="pt-4 mt-4 border-t border-zinc-800">
+          <a href="settings.html" class="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-surface rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Settings
+          </a>
+        </div>
+      </nav>
+
+      <!-- User Section -->
+      <div class="p-4 border-t border-zinc-800">
+        <div class="flex items-center gap-3 px-3 py-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full flex items-center justify-center text-sm font-medium">
+            JD
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-medium truncate">John Doe</div>
+            <div class="text-xs text-zinc-500">Free Plan</div>
+          </div>
+          <button class="text-zinc-400 hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+      <!-- Top Bar -->
+      <header class="h-16 flex items-center justify-between px-6 border-b border-zinc-800 bg-elevated">
+        <!-- Mobile Menu -->
+        <button class="lg:hidden text-zinc-400 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <h1 class="text-lg font-semibold hidden lg:block">Dashboard</h1>
+
+        <div class="flex items-center gap-4">
+          <!-- Upgrade Banner -->
+          <a href="pricing.html" class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-violet-600/20 to-blue-600/20 border border-violet-500/30 rounded-lg text-sm">
+            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span class="text-violet-300">Upgrade to Pro</span>
+          </a>
+
+          <!-- Notifications -->
+          <button class="relative text-zinc-400 hover:text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center">2</span>
+          </button>
+
+          <!-- User Avatar (Mobile) -->
+          <div class="lg:hidden w-8 h-8 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full flex items-center justify-center text-sm font-medium">
+            JD
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="flex-1 overflow-auto p-6">
+        <!-- Welcome Banner -->
+        <div class="mb-6 p-4 bg-gradient-to-r from-blue-600/10 to-violet-600/10 border border-blue-500/20 rounded-xl">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-semibold mb-1">Welcome back, John!</h2>
+              <p class="text-sm text-zinc-400">You're on the Free plan. <span class="text-blue-400">Upgrade to Pro</span> for real-time whale alerts.</p>
+            </div>
+            <a href="pricing.html" class="hidden sm:block px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-lg transition-colors">
+              Upgrade Now
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <!-- Active Markets -->
+          <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs text-zinc-500 uppercase tracking-wide">Active Markets</span>
+              <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+            <div class="text-2xl font-bold font-mono">1,247</div>
+            <div class="text-xs text-green-500 mt-1">+23 today</div>
+          </div>
+
+          <!-- 24h Volume -->
+          <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs text-zinc-500 uppercase tracking-wide">24h Volume</span>
+              <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="text-2xl font-bold font-mono">$12.4M</div>
+            <div class="text-xs text-green-500 mt-1">+18.2% vs yesterday</div>
+          </div>
+
+          <!-- Whale Trades -->
+          <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs text-zinc-500 uppercase tracking-wide">Whale Trades (24h)</span>
+              <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+            </div>
+            <div class="text-2xl font-bold font-mono text-green-500">+847</div>
+            <div class="text-xs text-zinc-500 mt-1">Buys: 523 | Sells: 324</div>
+          </div>
+
+          <!-- Your Alerts -->
+          <div class="bg-elevated rounded-xl border border-zinc-800 p-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs text-zinc-500 uppercase tracking-wide">Your Alerts</span>
+              <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              </svg>
+            </div>
+            <div class="text-2xl font-bold font-mono">2/3</div>
+            <div class="text-xs text-amber-500 mt-1">1 alert remaining</div>
+          </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Quick Actions + Trending Markets -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <a href="screener.html" class="flex flex-col items-center gap-2 p-4 bg-elevated border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium">Find Markets</span>
+              </a>
+              <a href="whales.html" class="flex flex-col items-center gap-2 p-4 bg-elevated border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                <div class="w-10 h-10 bg-violet-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium">View Whales</span>
+              </a>
+              <a href="alerts.html" class="flex flex-col items-center gap-2 p-4 bg-elevated border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                <div class="w-10 h-10 bg-amber-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium">Set Alert</span>
+              </a>
+              <a href="#" class="flex flex-col items-center gap-2 p-4 bg-elevated border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                <div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium">Export CSV</span>
+              </a>
+            </div>
+
+            <!-- Trending Markets -->
+            <div class="bg-elevated rounded-xl border border-zinc-800">
+              <div class="flex items-center justify-between p-4 border-b border-zinc-800">
+                <h3 class="font-semibold">Trending Markets</h3>
+                <a href="screener.html" class="text-sm text-blue-500 hover:text-blue-400">View All</a>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="text-xs text-zinc-500 uppercase border-b border-zinc-800">
+                    <tr>
+                      <th class="px-4 py-3 text-left">Market</th>
+                      <th class="px-4 py-3 text-right">YES</th>
+                      <th class="px-4 py-3 text-right hidden sm:table-cell">24h</th>
+                      <th class="px-4 py-3 text-right hidden md:table-cell">Volume</th>
+                      <th class="px-4 py-3 text-right">Whales</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-zinc-800/50">
+                    <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span class="truncate max-w-[200px]">Will BTC reach $150k in 2025?</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right font-mono">42%</td>
+                      <td class="px-4 py-3 text-right font-mono text-green-500 hidden sm:table-cell">+8.2%</td>
+                      <td class="px-4 py-3 text-right font-mono hidden md:table-cell">$2.4M</td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="inline-flex items-center gap-1 text-green-400 text-xs">
+                          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                          3 buys
+                        </span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                          <span class="truncate max-w-[200px]">US Election 2024 - Trump wins</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right font-mono">67%</td>
+                      <td class="px-4 py-3 text-right font-mono text-red-500 hidden sm:table-cell">-2.1%</td>
+                      <td class="px-4 py-3 text-right font-mono hidden md:table-cell">$8.1M</td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="inline-flex items-center gap-1 text-red-400 text-xs">
+                          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                          2 sells
+                        </span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span class="truncate max-w-[200px]">ETH Spot ETF Approved Q1 2025</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right font-mono">31%</td>
+                      <td class="px-4 py-3 text-right font-mono text-green-500 hidden sm:table-cell">+15.4%</td>
+                      <td class="px-4 py-3 text-right font-mono hidden md:table-cell">$1.2M</td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="inline-flex items-center gap-1 text-green-400 text-xs">
+                          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                          5 buys
+                        </span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-zinc-500 rounded-full"></span>
+                          <span class="truncate max-w-[200px]">Fed Rate Cut March 2025</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right font-mono">55%</td>
+                      <td class="px-4 py-3 text-right font-mono text-zinc-500 hidden sm:table-cell">0.0%</td>
+                      <td class="px-4 py-3 text-right font-mono hidden md:table-cell">$890K</td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="text-zinc-500 text-xs">No activity</span>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface/50 transition-colors cursor-pointer">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                          <span class="truncate max-w-[200px]">Super Bowl LVIII - Chiefs Win</span>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-right font-mono">38%</td>
+                      <td class="px-4 py-3 text-right font-mono text-green-500 hidden sm:table-cell">+4.7%</td>
+                      <td class="px-4 py-3 text-right font-mono hidden md:table-cell">$3.5M</td>
+                      <td class="px-4 py-3 text-right">
+                        <span class="inline-flex items-center gap-1 text-green-400 text-xs">
+                          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+                          2 buys
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar -->
+          <div class="space-y-6">
+            <!-- Top Whales -->
+            <div class="bg-elevated rounded-xl border border-zinc-800">
+              <div class="flex items-center justify-between p-4 border-b border-zinc-800">
+                <h3 class="font-semibold">Top Whales</h3>
+                <a href="whales.html" class="text-sm text-blue-500 hover:text-blue-400">View All</a>
+              </div>
+              <div class="p-4 space-y-3">
+                <!-- Whale 1 -->
+                <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer">
+                  <div class="relative">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-lg">
+                      🐋
+                    </div>
+                    <span class="absolute -top-1 -right-1 text-sm">🥇</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-medium text-sm truncate">CryptoOracle</div>
+                    <div class="text-xs text-zinc-500">0x7a3d...8f2c</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-mono text-sm text-green-500">78.4%</div>
+                    <div class="text-xs text-zinc-500">Win rate</div>
+                  </div>
+                </div>
+                <!-- Whale 2 -->
+                <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer">
+                  <div class="relative">
+                    <div class="w-10 h-10 bg-gradient-to-br from-zinc-400 to-zinc-500 rounded-full flex items-center justify-center text-lg">
+                      🦈
+                    </div>
+                    <span class="absolute -top-1 -right-1 text-sm">🥈</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-medium text-sm truncate">BigWinTrader</div>
+                    <div class="text-xs text-zinc-500">0x2b1c...4e9a</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-mono text-sm text-green-500">71.2%</div>
+                    <div class="text-xs text-zinc-500">Win rate</div>
+                  </div>
+                </div>
+                <!-- Whale 3 -->
+                <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface/50 transition-colors cursor-pointer">
+                  <div class="relative">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full flex items-center justify-center text-lg">
+                      🐬
+                    </div>
+                    <span class="absolute -top-1 -right-1 text-sm">🥉</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-medium text-sm truncate">AlphaSeeker</div>
+                    <div class="text-xs text-zinc-500">0x9f4a...1d7e</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-mono text-sm text-green-500">68.9%</div>
+                    <div class="text-xs text-zinc-500">Win rate</div>
+                  </div>
+                </div>
+
+                <!-- Locked (Free tier) -->
+                <div class="relative">
+                  <div class="blur-sm pointer-events-none space-y-3 opacity-50">
+                    <div class="flex items-center gap-3 p-2">
+                      <div class="w-10 h-10 bg-zinc-700 rounded-full"></div>
+                      <div class="flex-1">
+                        <div class="h-4 w-24 bg-zinc-700 rounded"></div>
+                        <div class="h-3 w-16 bg-zinc-800 rounded mt-1"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-elevated border border-zinc-700 rounded-lg text-sm">
+                      <svg class="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                      </svg>
+                      <span class="text-zinc-400">Upgrade for more</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-elevated rounded-xl border border-zinc-800">
+              <div class="flex items-center justify-between p-4 border-b border-zinc-800">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold">Recent Activity</h3>
+                  <span class="flex items-center gap-1 px-2 py-0.5 bg-amber-500/10 text-amber-500 text-xs rounded-full">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    15 min delay
+                  </span>
+                </div>
+                <a href="activity.html" class="text-sm text-blue-500 hover:text-blue-400">View All</a>
+              </div>
+              <div class="p-4 space-y-3">
+                <!-- Activity Item -->
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm">
+                      <span class="font-medium text-blue-400">CryptoOracle</span>
+                      <span class="text-zinc-400"> bought </span>
+                      <span class="font-mono text-green-500">$25,000</span>
+                    </p>
+                    <p class="text-xs text-zinc-500 truncate">BTC $150k in 2025</p>
+                    <p class="text-xs text-zinc-600 mt-1">17 min ago</p>
+                  </div>
+                </div>
+                <!-- Activity Item -->
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-red-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm">
+                      <span class="font-medium text-blue-400">BigWinTrader</span>
+                      <span class="text-zinc-400"> sold </span>
+                      <span class="font-mono text-red-500">$15,000</span>
+                    </p>
+                    <p class="text-xs text-zinc-500 truncate">Trump wins 2024</p>
+                    <p class="text-xs text-zinc-600 mt-1">23 min ago</p>
+                  </div>
+                </div>
+                <!-- Activity Item -->
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm">
+                      <span class="font-medium text-blue-400">AlphaSeeker</span>
+                      <span class="text-zinc-400"> bought </span>
+                      <span class="font-mono text-green-500">$50,000</span>
+                    </p>
+                    <p class="text-xs text-zinc-500 truncate">ETH ETF Q1 2025</p>
+                    <p class="text-xs text-zinc-600 mt-1">31 min ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Your Alerts -->
+            <div class="bg-elevated rounded-xl border border-zinc-800">
+              <div class="flex items-center justify-between p-4 border-b border-zinc-800">
+                <h3 class="font-semibold">Your Alerts</h3>
+                <a href="alerts.html" class="text-sm text-blue-500 hover:text-blue-400">Manage</a>
+              </div>
+              <div class="p-4 space-y-3">
+                <div class="flex items-center justify-between p-2 bg-surface rounded-lg">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">BTC $150k in 2025</p>
+                    <p class="text-xs text-zinc-500">Price &gt; 50%</p>
+                  </div>
+                  <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <div class="flex items-center justify-between p-2 bg-surface rounded-lg">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate">CryptoOracle activity</p>
+                    <p class="text-xs text-zinc-500">Any trade</p>
+                  </div>
+                  <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                </div>
+                <a href="alerts.html" class="flex items-center justify-center gap-2 p-2 border border-dashed border-zinc-700 rounded-lg text-sm text-zinc-500 hover:text-white hover:border-zinc-600 transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                  Add Alert (1 remaining)
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

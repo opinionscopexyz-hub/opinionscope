@@ -1,0 +1,40 @@
+{
+  "name": "opinion-scope",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "dotenv": "^17.2.2",
+      "zod": "^4.1.13",
+      "typescript": "^5",
+      "convex": "^1.31.2",
+      "@types/node": "^25.0.9"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint -- --fix",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F @opinion-scope/backend dev",
+    "dev:setup": "turbo -F @opinion-scope/backend dev:setup"
+  },
+  "dependencies": {
+    "@opinion-scope/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@opinion-scope/config": "workspace:*",
+    "turbo": "^2.7.6",
+    "typescript": "catalog:"
+  },
+  "packageManager": "bun@1.3.7"
+}
