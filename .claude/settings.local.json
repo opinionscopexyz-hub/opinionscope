@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun run lint)",
+      "WebFetch(domain:docs.convex.dev)"
+    ]
+  }
+}
