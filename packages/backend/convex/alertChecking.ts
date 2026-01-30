@@ -1,8 +1,8 @@
+// DISABLED: Alert email functionality - Resend causes bundling issues
+// TODO: Re-enable when splitting Node.js actions into separate files
 import { v } from "convex/values";
 import { internalMutation, internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
-import type { Id } from "./_generated/dataModel";
-import { Resend } from "resend";
 
 // Tier-based cooldown periods (in ms)
 const COOLDOWN_BY_TIER = {
@@ -98,19 +98,6 @@ export const checkPriceAlerts = internalMutation({
 
         const content = `${market.title} reached ${(currentPrice * 100).toFixed(0)}%`;
 
-        // Log email notification if user has email enabled
-        if (user.notificationPreferences.email) {
-          await ctx.db.insert("notificationLog", {
-            userId: alert.userId,
-            alertId: alert._id,
-            type: "price",
-            channel: "email",
-            status: "pending",
-            content: `Price alert: ${content}`,
-            sentAt: now,
-          });
-        }
-
         // Log in-app notification (always)
         await ctx.db.insert("notificationLog", {
           userId: alert.userId,
@@ -124,11 +111,6 @@ export const checkPriceAlerts = internalMutation({
 
         triggeredCount++;
       }
-    }
-
-    // Schedule email sending for pending notifications
-    if (triggeredCount > 0) {
-      await ctx.scheduler.runAfter(0, internal.alertChecking.sendPendingEmails, {});
     }
 
     return { checkedCount: alerts.length, triggeredCount };
@@ -198,20 +180,6 @@ export const checkWhaleAlertsForActivity = internalMutation({
         triggerCount: alert.triggerCount + 1,
       });
 
-      // Log email notification if user has email enabled
-      if (user.notificationPreferences.email) {
-        await ctx.db.insert("notificationLog", {
-          userId: alert.userId,
-          alertId: alert._id,
-          activityId,
-          type: "whale",
-          channel: "email",
-          status: "pending",
-          content: `Whale alert: ${content}`,
-          sentAt: now,
-        });
-      }
-
       // Log in-app notification (always)
       await ctx.db.insert("notificationLog", {
         userId: alert.userId,
@@ -227,82 +195,22 @@ export const checkWhaleAlertsForActivity = internalMutation({
       triggeredCount++;
     }
 
-    // Schedule email sending for pending notifications
-    if (triggeredCount > 0) {
-      await ctx.scheduler.runAfter(0, internal.alertChecking.sendPendingEmails, {});
-    }
-
     return { triggeredCount };
   },
 });
 
-// ============ EMAIL SENDING ============
+// ============ EMAIL SENDING (DISABLED) ============
 
-// Mutation to collect pending emails and dispatch to action
+// STUB: Mutation to collect pending emails - disabled
 export const sendPendingEmails = internalMutation({
   args: {},
-  handler: async (ctx) => {
-    // Get pending email notifications
-    const pendingEmails = await ctx.db
-      .query("notificationLog")
-      .withIndex("by_status", (q) => q.eq("status", "pending"))
-      .filter((q) => q.eq(q.field("channel"), "email"))
-      .take(50);
-
-    if (pendingEmails.length === 0) return { sentCount: 0 };
-
-    // Batch fetch users for email addresses
-    const userIds = [...new Set(pendingEmails.map((n) => n.userId))];
-    const usersData = await Promise.all(userIds.map((id) => ctx.db.get(id)));
-    const userMap = new Map(
-      usersData.filter(Boolean).map((u) => [u!._id, u!])
-    );
-
-    // Prepare email payloads
-    const emailPayloads: Array<{
-      notificationId: Id<"notificationLog">;
-      to: string;
-      subject: string;
-      content: string;
-      type: string;
-    }> = [];
-
-    for (const notification of pendingEmails) {
-      const user = userMap.get(notification.userId);
-      if (!user || !user.email) {
-        await ctx.db.patch(notification._id, {
-          status: "failed",
-          errorMessage: "User email not found",
-        });
-        continue;
-      }
-
-      const subject =
-        notification.type === "price"
-          ? "OpinionScope: Price Alert Triggered"
-          : "OpinionScope: Whale Alert";
-
-      emailPayloads.push({
-        notificationId: notification._id,
-        to: user.email,
-        subject,
-        content: notification.content,
-        type: notification.type,
-      });
-    }
-
-    if (emailPayloads.length > 0) {
-      // Schedule action to send emails
-      await ctx.scheduler.runAfter(0, internal.alertChecking.sendEmailBatch, {
-        emails: emailPayloads,
-      });
-    }
-
-    return { scheduledCount: emailPayloads.length };
+  handler: async () => {
+    console.warn("[DISABLED] sendPendingEmails called - email functionality disabled");
+    return { sentCount: 0 };
   },
 });
 
-// Action to send emails via Resend API
+// STUB: Action to send emails - disabled (Resend causes bundling issues)
 export const sendEmailBatch = internalAction({
   args: {
     emails: v.array(
@@ -316,79 +224,18 @@ export const sendEmailBatch = internalAction({
     ),
   },
   handler: async (ctx, args) => {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.warn("RESEND_API_KEY not configured, skipping email send");
-      // Mark all as failed
-      for (const email of args.emails) {
-        await ctx.runMutation(internal.alertChecking.updateNotificationStatus, {
-          notificationId: email.notificationId,
-          status: "failed",
-          errorMessage: "RESEND_API_KEY not configured",
-        });
-      }
-      return { sentCount: 0, failedCount: args.emails.length };
-    }
-
-    const resend = new Resend(apiKey);
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "alerts@opinionscope.xyz";
-    let sentCount = 0;
-    let failedCount = 0;
-
+    console.warn(`[DISABLED] sendEmailBatch called for ${args.emails.length} emails`);
+    // Mark all as failed
     for (const email of args.emails) {
-      try {
-        await resend.emails.send({
-          from: fromEmail,
-          to: email.to,
-          subject: email.subject,
-          html: buildEmailHtml(email.content, email.type),
-        });
-
-        await ctx.runMutation(internal.alertChecking.updateNotificationStatus, {
-          notificationId: email.notificationId,
-          status: "sent",
-        });
-        sentCount++;
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Unknown error";
-        console.error(`Failed to send email to ${email.to}:`, errorMessage);
-
-        await ctx.runMutation(internal.alertChecking.updateNotificationStatus, {
-          notificationId: email.notificationId,
-          status: "failed",
-          errorMessage,
-        });
-        failedCount++;
-      }
+      await ctx.runMutation(internal.alertChecking.updateNotificationStatus, {
+        notificationId: email.notificationId,
+        status: "failed",
+        errorMessage: "Email sending disabled - pending Node.js runtime split",
+      });
     }
-
-    return { sentCount, failedCount };
+    return { sentCount: 0, failedCount: args.emails.length };
   },
 });
-
-// Helper to build email HTML
-function buildEmailHtml(content: string, type: string): string {
-  const alertType = type === "price" ? "Price Alert" : "Whale Alert";
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; background-color: #f5f5f5;">
-        <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 8px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h2 style="margin: 0 0 16px; color: #333;">${alertType}</h2>
-          <p style="margin: 0 0 24px; color: #666; font-size: 16px; line-height: 1.5;">${content}</p>
-          <a href="https://opinionscope.xyz/alerts" style="display: inline-block; background: #000; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500;">View Alerts</a>
-          <hr style="margin: 24px 0; border: none; border-top: 1px solid #eee;">
-          <p style="margin: 0; color: #999; font-size: 12px;">You received this email because you have alerts enabled on OpinionScope.</p>
-        </div>
-      </body>
-    </html>
-  `;
-}
 
 // Mutation to update notification status (called from action)
 export const updateNotificationStatus = internalMutation({

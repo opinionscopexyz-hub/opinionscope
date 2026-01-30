@@ -1,7 +1,7 @@
+// DISABLED: Subscription email functionality - Resend causes bundling issues
+// TODO: Re-enable when splitting Node.js actions into separate files
 import { v } from "convex/values";
 import { internalMutation, internalAction, query } from "./_generated/server";
-import { Resend } from "resend";
-import { buildSubscriptionEmailContent } from "./lib/subscriptionEmails";
 
 // ============ INTERNAL MUTATIONS ============
 
@@ -93,8 +93,9 @@ export const downgradeToFree = internalMutation({
   },
 });
 
-// ============ INTERNAL ACTIONS FOR EMAIL ============
+// ============ INTERNAL ACTIONS FOR EMAIL (DISABLED) ============
 
+// STUB: Email sending disabled - Resend causes bundling issues with Node.js runtime
 export const sendSubscriptionEmail = internalAction({
   args: {
     to: v.string(),
@@ -106,29 +107,8 @@ export const sendSubscriptionEmail = internalAction({
     ),
   },
   handler: async (_, args) => {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.warn("RESEND_API_KEY not configured, skipping subscription email");
-      return { sent: false, error: "RESEND_API_KEY not configured" };
-    }
-
-    const resend = new Resend(apiKey);
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "hello@opinionscope.xyz";
-    const { subject, html } = buildSubscriptionEmailContent(args.tier, args.type);
-
-    try {
-      await resend.emails.send({
-        from: fromEmail,
-        to: args.to,
-        subject,
-        html,
-      });
-      return { sent: true };
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error(`Failed to send subscription email to ${args.to}:`, errorMessage);
-      return { sent: false, error: errorMessage };
-    }
+    console.warn(`[DISABLED] sendSubscriptionEmail called for ${args.to}, type: ${args.type}`);
+    return { sent: false, error: "Email sending disabled - pending Node.js runtime split" };
   },
 });
 
