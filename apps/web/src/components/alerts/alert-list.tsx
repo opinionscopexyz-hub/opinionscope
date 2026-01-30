@@ -58,7 +58,7 @@ export function AlertList({ alerts }: AlertListProps) {
     try {
       await toggleAlert({ alertId, isActive });
       toast.success(isActive ? "Alert enabled" : "Alert disabled");
-    } catch (error) {
+    } catch {
       toast.error("Failed to update alert");
     } finally {
       setLoadingStates((prev) => ({ ...prev, [alertId]: false }));
@@ -70,7 +70,7 @@ export function AlertList({ alerts }: AlertListProps) {
     try {
       await deleteAlert({ alertId });
       toast.success("Alert deleted");
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete alert");
     } finally {
       setLoadingStates((prev) => ({ ...prev, [`del-${alertId}`]: false }));

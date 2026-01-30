@@ -4,9 +4,8 @@ import { useQuery } from "convex/react";
 import { api } from "@opinion-scope/backend/convex/_generated/api";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Card } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowUpRight, ArrowDownRight, Lock } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatTimeAgo } from "@/lib/format-utils";
 import type { Id } from "@opinion-scope/backend/convex/_generated/dataModel";
@@ -16,11 +15,8 @@ interface RecentTradesProps {
 }
 
 export function RecentTrades({ whaleId }: RecentTradesProps) {
-  const { tier } = useCurrentUser();
+  useCurrentUser();
   const trades = useQuery(api.whales.getRecentTrades, { whaleId });
-
-  const tierLimit = tier === "free" ? 3 : tier === "pro" ? 10 : 50;
-  const showUpgrade = tier !== "pro_plus";
 
   if (trades === undefined) {
     return (

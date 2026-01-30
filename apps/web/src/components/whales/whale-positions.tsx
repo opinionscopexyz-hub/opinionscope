@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Card } from "@/components/ui/card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Lock, ExternalLink, TrendingUp, ChevronDown } from "lucide-react";
+import { ExternalLink, TrendingUp, ChevronDown } from "lucide-react";
 import { formatPnl, formatVolume } from "@/lib/format-utils";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import type { PositionData } from "@/lib/opinion-trade/types";
@@ -23,14 +23,14 @@ interface PositionsResponse {
 }
 
 export function WhalePositions({ whaleAddress }: WhalePositionsProps) {
-  const { isPro } = useCurrentUser();
+  useCurrentUser();
   const [positions, setPositions] = useState<PositionData[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(false);
-  const [isLimited, setIsLimited] = useState(false);
-  const [tierLimit, setTierLimit] = useState(3);
+  const [, setIsLimited] = useState(false);
+  const [, setTierLimit] = useState(3);
   const [error, setError] = useState<string | null>(null);
 
   const fetchPositions = useCallback(async (pageNum: number, append = false) => {

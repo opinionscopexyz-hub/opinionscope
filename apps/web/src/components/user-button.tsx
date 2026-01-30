@@ -5,19 +5,16 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser } from "@/hooks/use-current-user";
-import { LogOut, Settings, CreditCard, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import Image from "next/image";
 
 export function UserButton() {
   const { isSignedIn, user } = useUser();
-  const { tier, isLoading } = useCurrentUser();
+  const { isLoading } = useCurrentUser();
 
   if (!isSignedIn) {
     return (
@@ -28,12 +25,6 @@ export function UserButton() {
       </SignInButton>
     );
   }
-
-  const tierBadge = {
-    free: null,
-    pro: "Pro",
-    pro_plus: "Pro+",
-  }[tier];
 
   return (
     <DropdownMenu>

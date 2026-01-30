@@ -38,7 +38,7 @@ export function Testimonials() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <p className="text-primary font-mono text-sm mb-2 tracking-wider">
-            // VERIFIED RESULTS
+            {/* // VERIFIED RESULTS */}
           </p>
           <h2 className="text-3xl font-bold mb-4">Trusted by Traders</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
