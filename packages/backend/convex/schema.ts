@@ -82,6 +82,17 @@ export default defineSchema({
     // Staleness tracking: when this whale was last seen in leaderboard API
     // Used to show staleness indicators for whales who dropped off top 100
     leaderboardSyncedAt: v.optional(v.number()),
+    // Per-stat sync timestamps for staleness filtering (26h threshold = 24h sync + 2h buffer)
+    pnl24hSyncedAt: v.optional(v.number()),
+    pnl7dSyncedAt: v.optional(v.number()),
+    pnl30dSyncedAt: v.optional(v.number()),
+    totalPnlSyncedAt: v.optional(v.number()),
+    volume24hSyncedAt: v.optional(v.number()),
+    volume7dSyncedAt: v.optional(v.number()),
+    volume30dSyncedAt: v.optional(v.number()),
+    totalVolumeSyncedAt: v.optional(v.number()),
+    points7dSyncedAt: v.optional(v.number()),
+    totalPointsSyncedAt: v.optional(v.number()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })

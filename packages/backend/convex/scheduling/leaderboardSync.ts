@@ -39,6 +39,11 @@ function getWhaleFieldName(dataType: DataType, period: Period): string {
   return fieldMap[`${dataType}-${period}`];
 }
 
+// Maps stat field name to its timestamp field name for staleness tracking
+function getTimestampFieldName(fieldName: string): string {
+  return `${fieldName}SyncedAt`;
+}
+
 // ============ SYNC TRIGGER ============
 
 export const triggerLeaderboardSync = internalMutation({
@@ -202,9 +207,10 @@ export const processLeaderboardResults = internalMutation({
           continue;
         }
 
-        // Build update object with only the specific field for this sync
+        // Build update object with the specific field and its timestamp for staleness tracking
         const updateFields: Record<string, number | string | undefined> = {
           [trader.fieldName]: value,
+          [getTimestampFieldName(trader.fieldName)]: Date.now(),
         };
 
         await ctx.runMutation(internal.whales.upsertWhale, {

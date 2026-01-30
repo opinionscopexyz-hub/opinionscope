@@ -6,6 +6,9 @@ import type { Id } from "./_generated/dataModel";
 
 // NOTE: MIN_TRADES_FOR_LEADERBOARD filter removed - we trust the API data
 
+// Stale threshold: 24h sync interval + 2h buffer = 26 hours
+const STALE_THRESHOLD_MS = 26 * 60 * 60 * 1000;
+
 export const getLeaderboard = query({
   args: {
     sortBy: v.optional(
@@ -34,59 +37,151 @@ export const getLeaderboard = query({
     // Cap at 100 for performance (matches frontend max)
     const effectiveLimit = Math.min(limit, 100);
 
-    // Use index range queries for efficient filtering (excludes undefined and 0)
-    // Index range is evaluated at DB level, much faster than JS filter
+    // Filter-only approach: prioritizes accuracy over performance
+    // Acceptable for <10K whales. If table grows significantly, migrate to compound indexes.
     const db = ctx.db;
     let whales;
+    const staleThreshold = Date.now() - STALE_THRESHOLD_MS;
 
     switch (sortBy) {
-      case "totalVolume":
-        whales = await db.query("whales").withIndex("by_totalVolume", (q) => q.gt("totalVolume", 0)).order("desc").take(effectiveLimit);
+      case "totalVolume": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("totalVolume"), 0),
+            q.gt(q.field("totalVolumeSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.totalVolume ?? 0) - (a.totalVolume ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "totalPnl":
-        whales = await db.query("whales").withIndex("by_totalPnl", (q) => q.gt("totalPnl", 0)).order("desc").take(effectiveLimit);
+      }
+      case "totalPnl": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("totalPnl"), 0),
+            q.gt(q.field("totalPnlSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.totalPnl ?? 0) - (a.totalPnl ?? 0))
+          .slice(0, effectiveLimit);
         break;
+      }
       case "followerCount":
-        whales = await db.query("whales").withIndex("by_followerCount", (q) => q.gt("followerCount", 0)).order("desc").take(effectiveLimit);
-        break;
-      case "volume24h":
-        whales = await db.query("whales").withIndex("by_volume24h", (q) => q.gt("volume24h", 0)).order("desc").take(effectiveLimit);
-        break;
-      case "volume7d":
+        // followerCount is not from leaderboard sync - use index, no stale filter
         whales = await db.query("whales")
-          .filter((q) => q.gt(q.field("volume7d"), 0))
-          .take(effectiveLimit * 3)
-          .then((all) => all.sort((a, b) => (b.volume7d ?? 0) - (a.volume7d ?? 0)).slice(0, effectiveLimit));
+          .withIndex("by_followerCount", (q) => q.gt("followerCount", 0))
+          .order("desc")
+          .take(effectiveLimit);
         break;
-      case "volume30d":
-        whales = await db.query("whales")
-          .filter((q) => q.gt(q.field("volume30d"), 0))
-          .take(effectiveLimit * 3)
-          .then((all) => all.sort((a, b) => (b.volume30d ?? 0) - (a.volume30d ?? 0)).slice(0, effectiveLimit));
+      case "volume24h": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("volume24h"), 0),
+            q.gt(q.field("volume24hSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.volume24h ?? 0) - (a.volume24h ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "pnl24h":
-        whales = await db.query("whales").withIndex("by_pnl24h", (q) => q.gt("pnl24h", 0)).order("desc").take(effectiveLimit);
+      }
+      case "volume7d": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("volume7d"), 0),
+            q.gt(q.field("volume7dSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.volume7d ?? 0) - (a.volume7d ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "pnl7d":
-        whales = await db.query("whales")
-          .filter((q) => q.neq(q.field("pnl7d"), 0))
-          .take(effectiveLimit * 3)
-          .then((all) => all.sort((a, b) => (b.pnl7d ?? 0) - (a.pnl7d ?? 0)).slice(0, effectiveLimit));
+      }
+      case "volume30d": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("volume30d"), 0),
+            q.gt(q.field("volume30dSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.volume30d ?? 0) - (a.volume30d ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "pnl30d":
-        whales = await db.query("whales")
-          .filter((q) => q.neq(q.field("pnl30d"), 0))
-          .take(effectiveLimit * 3)
-          .then((all) => all.sort((a, b) => (b.pnl30d ?? 0) - (a.pnl30d ?? 0)).slice(0, effectiveLimit));
+      }
+      case "pnl24h": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("pnl24h"), 0),
+            q.gt(q.field("pnl24hSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.pnl24h ?? 0) - (a.pnl24h ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "totalPoints":
-        whales = await db.query("whales").withIndex("by_totalPoints", (q) => q.gt("totalPoints", 0)).order("desc").take(effectiveLimit);
+      }
+      case "pnl7d": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.neq(q.field("pnl7d"), 0),
+            q.gt(q.field("pnl7dSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.pnl7d ?? 0) - (a.pnl7d ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      case "points7d":
-        whales = await db.query("whales").withIndex("by_points7d", (q) => q.gt("points7d", 0)).order("desc").take(effectiveLimit);
+      }
+      case "pnl30d": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.neq(q.field("pnl30d"), 0),
+            q.gt(q.field("pnl30dSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.pnl30d ?? 0) - (a.pnl30d ?? 0))
+          .slice(0, effectiveLimit);
         break;
-      default:
-        whales = await db.query("whales").withIndex("by_totalVolume", (q) => q.gt("totalVolume", 0)).order("desc").take(effectiveLimit);
+      }
+      case "totalPoints": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("totalPoints"), 0),
+            q.gt(q.field("totalPointsSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.totalPoints ?? 0) - (a.totalPoints ?? 0))
+          .slice(0, effectiveLimit);
+        break;
+      }
+      case "points7d": {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("points7d"), 0),
+            q.gt(q.field("points7dSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.points7d ?? 0) - (a.points7d ?? 0))
+          .slice(0, effectiveLimit);
+        break;
+      }
+      default: {
+        const all = await db.query("whales")
+          .filter((q) => q.and(
+            q.gt(q.field("totalVolume"), 0),
+            q.gt(q.field("totalVolumeSyncedAt"), staleThreshold)
+          ))
+          .collect();
+        whales = all
+          .sort((a, b) => (b.totalVolume ?? 0) - (a.totalVolume ?? 0))
+          .slice(0, effectiveLimit);
+      }
     }
 
     return {
@@ -484,6 +579,17 @@ export const upsertWhale = internalMutation({
     // Points stats
     totalPoints: v.optional(v.number()),
     points7d: v.optional(v.number()),
+    // Per-stat sync timestamps for staleness filtering
+    pnl24hSyncedAt: v.optional(v.number()),
+    pnl7dSyncedAt: v.optional(v.number()),
+    pnl30dSyncedAt: v.optional(v.number()),
+    totalPnlSyncedAt: v.optional(v.number()),
+    volume24hSyncedAt: v.optional(v.number()),
+    volume7dSyncedAt: v.optional(v.number()),
+    volume30dSyncedAt: v.optional(v.number()),
+    totalVolumeSyncedAt: v.optional(v.number()),
+    points7dSyncedAt: v.optional(v.number()),
+    totalPointsSyncedAt: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const { address, dataType, ...data } = args;
